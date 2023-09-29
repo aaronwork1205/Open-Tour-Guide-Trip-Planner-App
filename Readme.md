@@ -1,4 +1,3 @@
-# CS 8803 MAS
+# CS_8803_MAS_fall2023
 
-## Hi, welcome to our Open Tourist Guide project
-
+## Author: Hanqi Hua, Wenhao Wang
