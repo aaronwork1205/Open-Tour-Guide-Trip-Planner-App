@@ -24,7 +24,9 @@ export const HomeStack = () => {
 export const ProfileStack = () => {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator screenOptions={() => navOptions(navigation)}>
+    <Stack.Navigator
+      screenOptions={({ navigation, route }) => navOptions(navigation, route)}
+    >
       <Stack.Screen name="Profiles" component={ProfilesScreen} />
       <Stack.Screen name="Profile" component={ProfileDetailScreen} />
     </Stack.Navigator>

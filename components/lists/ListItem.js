@@ -8,7 +8,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import Text from "../Text";
+import Text from "../AppText";
 import colors from "../../config/colors";
 
 function ListItem({
