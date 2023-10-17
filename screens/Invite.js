@@ -5,8 +5,10 @@ import Screen from "../components/Screen";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 import AppText, { Text } from "../components/AppText";
+import AppTextInput from "../components/AppTextInput";
+import AppButton from "../components/AppButton";
 
-const initialMessages = [
+const initialCollaborators = [
   {
     id: 1,
     title: "LB",
@@ -25,53 +27,38 @@ const initialMessages = [
     description: "lalalala",
     image: require("../assets/brandon.jpg"),
   },
-  {
-    id: 4,
-    title: "blabla",
-    description: "lalala",
-    image: require("../assets/lb.jpg"),
-  },
 ];
 
-const initialFriends = [
-  {
-    id: 1,
-    title: "Wenhao",
-    description: "wenhaowenhao",
-    image: require("../assets/wenhao.jpg"),
-  },
-];
-
-function Invite(props) {
-  const [messages, setMessages] = useState(initialMessages);
+function Invite({ navigation }) {
+  const [collaborators, setCollaborators] = useState(initialCollaborators);
   const [refreshing, setRefreshing] = useState(false);
+  const [invitePersonEmail, setInvitePersonEmail] = useState("");
 
-  const [invitedFriends, setInvitedFriends] = useState(initialFriends);
+  // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
-  const handleDelete = (message) => {
-    const newMessage = messages.filter((m) => m.id !== message.id);
-    setMessages(newMessage);
-  };
-
-  const handleDeleteFriends = (invitedFriend) => {
-    const newInvitedFriend = invitedFriends.filter(
-      (f) => f.id !== invitedFriend.id
+  const handleDelete = (collaborator) => {
+    const newCollaborators = collaborators.filter(
+      (c) => c.id !== collaborator.id
     );
-    setInvitedFriends(newInvitedFriend);
+    setCollaborators(newCollaborators);
   };
+
   return (
     <Screen style={{ flex: "auto" }}>
-      <AppText style={styles.SepTitle}>Collaborators</AppText>
+      {/* <AppText style={styles.SepTitle}>Collaborators</AppText> */}
       <FlatList
         style={{ backgroundColor: "tomato" }}
-        data={messages}
-        keyExtractor={(message) => message.id.toString()}
+        data={collaborators}
+        keyExtractor={(c) => c.id.toString()}
         renderItem={({ item }) => (
           <ListItem
             title={item.title}
             subTitle={item.description}
             image={item.image}
-            onPress={() => console.log("Message selected", item)}
+            onPress={() => {
+              console.log("Message selected", item);
+              navigation.navigate("CollaboratorDetail", { collaborator: item });
+            }}
             renderRightActions={() => (
               <ListItemDeleteAction onPress={() => handleDelete(item)} />
             )}
@@ -90,23 +77,27 @@ function Invite(props) {
           ])
         }
       />
-      <AppText style={styles.SepTitle}>Invitation</AppText>
-      <FlatList
-        style={{ backgroundColor: "yellow" }}
-        data={invitedFriends}
-        keyExtractor={(invitedFriends) => invitedFriends.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.title}
-            subTitle={item.description}
-            image={item.image}
-            onPress={() => console.log("Message selected", item)}
-            renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDeleteFriends(item)} />
-            )}
-          />
-        )}
-      />
+      <AppText style={styles.SepTitleInvite}>Invite</AppText>
+      <View>
+        <AppTextInput
+          icon="account-plus"
+          placeholder="Invite by username"
+          width="90%"
+          alignSelf="center"
+          value={invitePersonEmail}
+          onChangeText={(text) => setInvitePersonEmail(text)}
+        />
+        <AppButton
+          title="Send"
+          color="secondary"
+          width="50%"
+          alignSelf="center"
+          onPress={() => {
+            console.log(invitePersonEmail);
+            setInvitePersonEmail("");
+          }}
+        />
+      </View>
     </Screen>
   );
 }
@@ -118,6 +109,15 @@ const styles = StyleSheet.create({
     color: "black",
     marginLeft: 10,
     marginTop: 10,
+    textAlign: "center",
+  },
+  SepTitleInvite: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+    marginLeft: 10,
+    marginTop: 20,
+    textAlign: "center",
   },
 });
 export default Invite;

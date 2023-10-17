@@ -9,7 +9,7 @@ export const navOptions = (navigation, route) => {
       backgroundColor: "#0f172a",
     },
     headerLeft: () => {
-      if (route.name === "Invite") {
+      if (route.name === "Collaborators") {
         return (
           <Ionicons
             name="arrow-back"
@@ -32,7 +32,7 @@ export const navOptions = (navigation, route) => {
       }
     },
     headerRight: () => {
-      if (route.name === "Invite") {
+      if (route.name === "Collaborators") {
         return;
       } else {
         return (
@@ -41,7 +41,7 @@ export const navOptions = (navigation, route) => {
             size={32}
             color="white"
             style={{ paddingRight: 15 }}
-            onPress={() => navigation.navigate("Invite")}
+            onPress={() => navigation.navigate("Collaborators")}
           />
         );
       }

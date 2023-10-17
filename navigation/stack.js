@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import ProfilesScreen from "../screens/profiles/profiles-screen";
 import ProfileDetailScreen from "../screens/profiles/profile-detail-screen";
 import Invite from "../screens/Invite";
+import CollaboratorNavigator from "./CollaboratorNavigator";
 
 const Stack = createStackNavigator();
 export const HomeStack = () => {
@@ -16,7 +17,11 @@ export const HomeStack = () => {
     >
       <Stack.Screen name="Home" component={HomeTabs} />
       <Stack.Screen name="Event" component={EventDetailScreen} />
-      <Stack.Screen name="Invite" component={Invite} />
+      <Stack.Screen
+        name="Collaborators"
+        component={CollaboratorNavigator}
+        // options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
