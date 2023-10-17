@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-navigation/bottom-tabs": "^6.5.8",
+    "@react-native-picker/picker": "^2.5.1",
+    "@react-navigation/bottom-tabs": "^6.5.9",
     "@react-navigation/drawer": "^6.6.3",
-    "@react-navigation/native": "^6.1.7",
+    "@react-navigation/native": "^6.1.8",
+    "@react-navigation/native-stack": "^6.9.14",
     "@react-navigation/stack": "^6.3.17",
     "expo": "~49.0.8",
     "expo-status-bar": "~1.6.0",
