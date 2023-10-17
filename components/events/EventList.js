@@ -2,6 +2,8 @@ import { View, Text, FlatList, RefreshControl } from "react-native";
 import { DUMMY_DATA } from "../../data/dummy";
 import EventItem from "./EventItem";
 const EventList = () => {
+  //   const [data, setData] = useState(getEvents());
+
   const renderItem = ({ item }) => {
     return (
       <View>
