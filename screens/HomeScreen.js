@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, Button } from "react-native";
-import EventList from "../components/events/event-list";
+import EventList from "../components/events/EventList";
 const HomeScreen = () => {
   const navigation = useNavigation();
   return (

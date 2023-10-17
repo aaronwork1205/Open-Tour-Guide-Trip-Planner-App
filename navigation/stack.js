@@ -1,10 +1,10 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import EventDetailScreen from "../screens/event-detail-screen";
-import { HomeTabs } from "./tabs";
-import { navOptions } from "./options";
+import EventDetailScreen from "../screens/EventDetailScreen";
+import { HomeTabs } from "./Tab";
+import { navOptions } from "./Options";
 import { useNavigation } from "@react-navigation/native";
-import ProfilesScreen from "../screens/profiles/profiles-screen";
-import ProfileDetailScreen from "../screens/profiles/profile-detail-screen";
+import ProfilesScreen from "../screens/profiles/ProfilesScreen";
+import ProfileDetailScreen from "../screens/profiles/ProfileDetailScreen";
 import Invite from "../screens/Invite";
 import CollaboratorNavigator from "./CollaboratorNavigator";
 

@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/home-screen";
+import HomeScreen from "../screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import Invite from "../screens/Invite";
 import MapView from "../screens/MapView";
