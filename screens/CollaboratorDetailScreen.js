@@ -10,7 +10,7 @@ function CollaboratorDetail({ route }) {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Title: {collaborator.title}</Text>
       <Text>Description: {collaborator.description}</Text>
-      {/* Render other details here */}
+      <Text>Description: {collaborator.access}</Text>
     </View>
   );
 }

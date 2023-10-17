@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
+
 import ListItem from "../components/lists/ListItem";
 import Screen from "../components/Screen";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
@@ -7,24 +8,28 @@ import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
 import AppText, { Text } from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
+import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 
 const initialCollaborators = [
   {
     id: 1,
     title: "LB",
     description: "blablabla",
+    access: "View",
     image: require("../assets/lb.jpg"),
   },
   {
     id: 2,
     title: "Minion",
     description: "lalalala",
+    access: "View",
     image: require("../assets/minion.jpg"),
   },
   {
     id: 3,
     title: "Brandon",
     description: "lalalala",
+    access: "Edit",
     image: require("../assets/brandon.jpg"),
   },
 ];
@@ -33,6 +38,7 @@ function Invite({ navigation }) {
   const [collaborators, setCollaborators] = useState(initialCollaborators);
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
+  const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
 
   // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
@@ -67,7 +73,7 @@ function Invite({ navigation }) {
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
         onRefresh={() =>
-          setMessages([
+          setCollaborators([
             {
               id: 2,
               title: "T1",
@@ -78,15 +84,21 @@ function Invite({ navigation }) {
         }
       />
       <AppText style={styles.SepTitleInvite}>Invite</AppText>
-      <View>
+
+      <View style={{ alignItems: "center", margin: 10 }}>
         <AppTextInput
           icon="account-plus"
           placeholder="Invite by username"
-          width="90%"
+          width="90%" // Adjust width as per your requirement
           alignSelf="center"
           value={invitePersonEmail}
           onChangeText={(text) => setInvitePersonEmail(text)}
         />
+
+        <AccessButtonGroup
+          onSelectionChange={(mode) => setSelectedMode(mode)}
+        />
+
         <AppButton
           title="Send"
           color="secondary"
@@ -94,6 +106,7 @@ function Invite({ navigation }) {
           alignSelf="center"
           onPress={() => {
             console.log(invitePersonEmail);
+            console.log(selectedMode);
             setInvitePersonEmail("");
           }}
         />
