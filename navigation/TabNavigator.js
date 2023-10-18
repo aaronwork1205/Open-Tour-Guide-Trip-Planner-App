@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import Invite from "../screens/InviteScreen";
-import MapView from "../screens/MapView";
-import CalendarView from "../screens/CalendarView";
+import MapView from "../screens/MapViewScreen";
+import CalendarView from "../screens/CalendarViewScreen";
 
 const Tab = createBottomTabNavigator();
 export const HomeTabs = () => {
