@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Invite from "../screens/Invite";
-import { navOptions } from "./Options";
+import { navOptions } from "./OptionNavigator";
 import CollaboratorDetail from "../screens/CollaboratorDetailScreen";
 import { useNavigation } from "@react-navigation/core";
 // import CollaboratorDetail from "./path-to-your/CollaboratorDetail"; // Create this screen to show the collaborator details

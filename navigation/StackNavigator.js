@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import EventDetailScreen from "../screens/EventDetailScreen";
-import { HomeTabs } from "./Tab";
-import { navOptions } from "./Options";
+import { HomeTabs } from "./TabNavigator";
+import { navOptions } from "./OptionNavigator";
 import { useNavigation } from "@react-navigation/native";
 import ProfilesScreen from "../screens/profiles/ProfilesScreen";
 import ProfileDetailScreen from "../screens/profiles/ProfileDetailScreen";

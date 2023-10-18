@@ -3,7 +3,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { HomeStack, ProfileStack } from "./Stack";
+import { HomeStack, ProfileStack } from "./StackNavigator";
 import { SafeAreaView, Image, View, Linking } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 const Drawer = createDrawerNavigator();
