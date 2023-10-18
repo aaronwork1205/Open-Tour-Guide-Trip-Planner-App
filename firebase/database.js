@@ -8,6 +8,12 @@ export const addUser = async (email) => {
   });
 };
 
+export const addCollaborator = async (email) => {
+  await setDoc(doc(FIRESTORE_DB, "users", trip), {
+    trips: [],
+  });
+};
+
 export const getEvents = async () => {
   const uid = FIREBASE_AUTH.currentUser.uid;
   const docRef = doc(FIRESTORE_DB, "users", uid);

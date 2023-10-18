@@ -5,30 +5,33 @@ import ListItem from "../components/lists/ListItem";
 import Screen from "../components/Screen";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import ListItemDeleteAction from "../components/lists/ListItemDeleteAction";
-import AppText, { Text } from "../components/AppText";
+import AppText from "../components/AppText";
 import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
+import { FIRESTORE_DB } from "../firebase/firebase";
+import { doc, setDoc, getDoc } from "../firebase/firebase";
+import { addCollaborator } from "../firebase/database";
 
 const initialCollaborators = [
   {
     id: 1,
-    title: "LB",
-    description: "blablabla",
+    name: "LB",
+    email: "bixingjian19@gmail.com",
     access: "View",
     image: require("../assets/lb.jpg"),
   },
   {
     id: 2,
-    title: "Minion",
-    description: "lalalala",
+    name: "Minion",
+    email: "minion@gmail.com",
     access: "View",
     image: require("../assets/minion.jpg"),
   },
   {
     id: 3,
-    title: "Brandon",
-    description: "lalalala",
+    name: "Brandon",
+    email: "brandon@gmail.com",
     access: "Edit",
     image: require("../assets/brandon.jpg"),
   },
@@ -51,15 +54,14 @@ function Invite({ navigation }) {
 
   return (
     <Screen style={{ flex: "auto" }}>
-      {/* <AppText style={styles.SepTitle}>Collaborators</AppText> */}
       <FlatList
         style={{ backgroundColor: "tomato" }}
         data={collaborators}
         keyExtractor={(c) => c.id.toString()}
         renderItem={({ item }) => (
           <ListItem
-            title={item.title}
-            subTitle={item.description}
+            title={item.name}
+            subTitle={item.email}
             image={item.image}
             onPress={() => {
               console.log("Message selected", item);
@@ -83,13 +85,13 @@ function Invite({ navigation }) {
           ])
         }
       />
-      <AppText style={styles.SepTitleInvite}>Invite</AppText>
+      <AppText style={styles.SepTitleInvite}>Add a Collaborator</AppText>
 
       <View style={{ alignItems: "center", margin: 10 }}>
         <AppTextInput
           icon="account-plus"
-          placeholder="Invite by username"
-          width="90%" // Adjust width as per your requirement
+          placeholder="Invite by email"
+          width="95%" // Adjust width as per your requirement
           alignSelf="center"
           value={invitePersonEmail}
           onChangeText={(text) => setInvitePersonEmail(text)}
@@ -104,10 +106,11 @@ function Invite({ navigation }) {
           color="secondary"
           width="50%"
           alignSelf="center"
-          onPress={() => {
+          onPress={async () => {
             console.log(invitePersonEmail);
             console.log(selectedMode);
             setInvitePersonEmail("");
+            await addCollaborator(invitePersonEmail);
           }}
         />
       </View>

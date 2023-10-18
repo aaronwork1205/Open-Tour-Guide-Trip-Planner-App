@@ -5,12 +5,11 @@ import { navOptions } from "./OptionNavigator";
 import { useNavigation } from "@react-navigation/native";
 import ProfilesScreen from "../screens/profiles/ProfilesScreen";
 import ProfileDetailScreen from "../screens/profiles/ProfileDetailScreen";
-import Invite from "../screens/Invite";
-import CollaboratorNavigator from "./CollaboratorNavigator";
+import Invite from "../screens/InviteScreen";
+import CollaboratorDetail from "../screens/CollaboratorDetailScreen";
 
 const Stack = createStackNavigator();
 export const HomeStack = () => {
-  const navigation = useNavigation();
   return (
     <Stack.Navigator
       screenOptions={({ navigation, route }) => navOptions(navigation, route)}
@@ -18,16 +17,16 @@ export const HomeStack = () => {
       <Stack.Screen name="Home" component={HomeTabs} />
       <Stack.Screen name="Event" component={EventDetailScreen} />
       <Stack.Screen
-        name="Collaborators"
-        component={CollaboratorNavigator}
+        name="Invite"
+        component={Invite}
         // options={{ headerShown: false }}
       />
+      <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />
     </Stack.Navigator>
   );
 };
 
 export const ProfileStack = () => {
-  const navigation = useNavigation();
   return (
     <Stack.Navigator
       screenOptions={({ navigation, route }) => navOptions(navigation, route)}
@@ -37,3 +36,14 @@ export const ProfileStack = () => {
     </Stack.Navigator>
   );
 };
+
+// export const InviteStack = () => {
+//   return (
+//     <Stack.Navigator
+//     // screenOptions={({ navigation, route }) => navOptions(navigation, route)}
+//     >
+//       <Stack.Screen name="Invite" component={Invite} />
+//       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />
+//     </Stack.Navigator>
+//   );
+// };
