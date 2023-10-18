@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import ListItem from "../components/lists/ListItem";
@@ -12,6 +12,7 @@ import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming thi
 import { FIRESTORE_DB } from "../firebase/firebase";
 import { doc, setDoc, getDoc } from "../firebase/firebase";
 import { addCollaborator } from "../firebase/database";
+import { collection, onSnapshot } from "firebase/firestore";
 
 const initialCollaborators = [
   {
@@ -38,10 +39,34 @@ const initialCollaborators = [
 ];
 
 function Invite({ navigation }) {
-  const [collaborators, setCollaborators] = useState(initialCollaborators);
+  const [collaborators, setCollaborators] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
+
+  useEffect(() => {
+    const collaboratorsRef = collection(
+      FIRESTORE_DB,
+      "trips",
+      "slWluB5kkySIVOyIfc1r",
+      "collaborators"
+    );
+
+    const subscriber = onSnapshot(collaboratorsRef, {
+      next: (snapshot) => {
+        const collaborators = [];
+        snapshot.docs.forEach((doc) => {
+          collaborators.push({
+            email: doc.id,
+            ...doc.data(),
+          });
+        });
+        console.log(collaborators);
+      },
+    });
+
+    return () => subscriber();
+  }, []);
 
   // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
@@ -110,7 +135,11 @@ function Invite({ navigation }) {
             console.log(invitePersonEmail);
             console.log(selectedMode);
             setInvitePersonEmail("");
-            await addCollaborator(invitePersonEmail);
+            await addCollaborator(
+              invitePersonEmail,
+              "slWluB5kkySIVOyIfc1r",
+              "Edit"
+            );
           }}
         />
       </View>
