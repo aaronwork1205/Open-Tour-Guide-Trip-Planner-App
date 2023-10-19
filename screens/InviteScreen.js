@@ -10,39 +10,59 @@ import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 import { FIRESTORE_DB } from "../firebase/firebase";
-import { doc, setDoc, getDoc } from "../firebase/firebase";
 import { addCollaborator } from "../firebase/database";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
-const initialCollaborators = [
-  {
-    id: 1,
-    name: "LB",
-    email: "bixingjian19@gmail.com",
-    access: "View",
-    image: require("../assets/lb.jpg"),
-  },
-  {
-    id: 2,
-    name: "Minion",
-    email: "minion@gmail.com",
-    access: "View",
-    image: require("../assets/minion.jpg"),
-  },
-  {
-    id: 3,
-    name: "Brandon",
-    email: "brandon@gmail.com",
-    access: "Edit",
-    image: require("../assets/brandon.jpg"),
-  },
-];
+// const initialCollaborators = [
+//   {
+//     name: "LB",
+//     email: "bixingjian19@gmail.com",
+//     access: "View",
+//     image: require("../assets/lb.jpg"),
+//   },
+//   {
+//     name: "Minion",
+//     email: "minion@gmail.com",
+//     access: "View",
+//     image: require("../assets/minion.jpg"),
+//   },
+//   {
+//     name: "Brandon",
+//     email: "brandon@gmail.com",
+//     access: "Edit",
+//     image: require("../assets/brandon.jpg"),
+//   },
+// ];
 
 function Invite({ navigation }) {
-  const [collaborators, setCollaborators] = useState();
+  const [collaborators, setCollaborators] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
+
+  // useEffect(() => {
+  //   const collaboratorsRef = collection(
+  //     FIRESTORE_DB,
+  //     "trips",
+  //     "slWluB5kkySIVOyIfc1r",
+  //     "collaborators"
+  //   );
+
+  //   const subscriber = onSnapshot(collaboratorsRef, {
+  //     next: (snapshot) => {
+  //       const collaborators = [];
+  //       snapshot.docs.forEach((doc) => {
+  //         collaborators.push({
+  //           email: doc.id,
+  //           ...doc.data(),
+  //         });
+  //       });
+  //       console.log(collaborators);
+  //     },
+  //   });
+
+  //   return () => subscriber();
+  // }, []);
 
   useEffect(() => {
     const collaboratorsRef = collection(
@@ -52,23 +72,21 @@ function Invite({ navigation }) {
       "collaborators"
     );
 
-    const subscriber = onSnapshot(collaboratorsRef, {
-      next: (snapshot) => {
-        const collaborators = [];
-        snapshot.docs.forEach((doc) => {
-          collaborators.push({
-            email: doc.id,
-            ...doc.data(),
-          });
+    // Establishing real-time listener to Firestore changes
+    const unsubscribe = onSnapshot(collaboratorsRef, (snapshot) => {
+      const fetchedCollaborators = [];
+      snapshot.docs.forEach((doc) => {
+        fetchedCollaborators.push({
+          email: doc.id,
+          ...doc.data(),
         });
-        console.log(collaborators);
-      },
+      });
+      setCollaborators(fetchedCollaborators); // Update state with fetched collaborators
     });
 
-    return () => subscriber();
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
   }, []);
-
-  // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
   const handleDelete = (collaborator) => {
     const newCollaborators = collaborators.filter(
@@ -77,12 +95,32 @@ function Invite({ navigation }) {
     setCollaborators(newCollaborators);
   };
 
+  // const getData = async () => {
+  //   console.log("getting data");
+
+  //   // Getting the collaborators collection inside the specific trip
+  //   const collabCollection = collection(
+  //     FIRESTORE_DB,
+  //     "trips",
+  //     "slWluB5kkySIVOyIfc1r",
+  //     "collaborators"
+  //   );
+  //   const querySnapshot = await getDocs(collabCollection);
+  //   if (!querySnapshot.empty) {
+  //     querySnapshot.forEach((doc) => {
+  //       console.log(doc.id, " => ", doc.data());
+  //     });
+  //   } else {
+  //     console.log("No collaborators found");
+  //   }
+  // };
+
   return (
     <Screen style={{ flex: "auto" }}>
       <FlatList
         style={{ backgroundColor: "tomato" }}
         data={collaborators}
-        keyExtractor={(c) => c.id.toString()}
+        keyExtractor={(c) => c.email}
         renderItem={({ item }) => (
           <ListItem
             title={item.name}
@@ -138,7 +176,7 @@ function Invite({ navigation }) {
             await addCollaborator(
               invitePersonEmail,
               "slWluB5kkySIVOyIfc1r",
-              "Edit"
+              selectedMode
             );
           }}
         />

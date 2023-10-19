@@ -23,9 +23,11 @@ const getUserInfo = async (email) => {
 };
 
 export const addCollaborator = async (email, trip, access) => {
-  userInfo = await getUserInfo(email);
+  // userInfo = await getUserInfo(email);
   await setDoc(doc(FIRESTORE_DB, "trips", trip, "collaborators", email), {
-    name: userInfo.name,
+    // name: userInfo.name,
+    name: email.split("@")[0],
+    access: access,
   });
 };
 

@@ -12,37 +12,37 @@ import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./firebase/firebase";
 import LoginScreen from "./screens/LoginScreen";
 
-export default function App() {
-  const [signedIn, setSignedIn] = useState(false);
-
-  onAuthStateChanged(FIREBASE_AUTH, (user) => {
-    if (user) {
-      setSignedIn(true);
-    } else {
-      setSignedIn(false);
-    }
-  });
-
-  return signedIn ? (
-    <NavigationContainer>
-      {/* <HomeStack /> */}
-      <MyDrawer />
-      <StatusBar style="light" />
-    </NavigationContainer>
-  ) : (
-    <LoginScreen />
-  );
-}
-
 // export default function App() {
-//   return (
+//   const [signedIn, setSignedIn] = useState(false);
+
+//   onAuthStateChanged(FIREBASE_AUTH, (user) => {
+//     if (user) {
+//       setSignedIn(true);
+//     } else {
+//       setSignedIn(false);
+//     }
+//   });
+
+//   return signedIn ? (
 //     <NavigationContainer>
 //       {/* <HomeStack /> */}
 //       <MyDrawer />
 //       <StatusBar style="light" />
 //     </NavigationContainer>
+//   ) : (
+//     <LoginScreen />
 //   );
 // }
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      {/* <HomeStack /> */}
+      <MyDrawer />
+      <StatusBar style="light" />
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
