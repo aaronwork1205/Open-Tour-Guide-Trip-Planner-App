@@ -65,8 +65,6 @@ Here's how you can use the Open Tour Guide App:
 
 5. **Explore Recommendations**: Receive personalized recommendations for attractions, restaurants, and accommodations at your destinations.
 
-6. **Access Offline**: Even when you're offline, you can access your trip plans and information.
-
 
 ## License <a name="license"></a>
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
