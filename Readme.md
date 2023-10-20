@@ -35,21 +35,21 @@ Welcome to the Open Tour Guide (Trip Planner) App! This is the front-end part of
 Follow these steps to install the Open Tour Guide App:
 
 1. Clone the repository to your local machine:
-   '''
+   ```
    git clone https://github.com/yourusername/CS_8803_MAS_fall2023
-   '''
+   ```
 2. Navigate to the project directory:
-   '''
+   ```
    cd CS_8803_MAS_fall2023
-   '''
+   ```
 3. Install the necessary dependencies:
-   '''
+   ```
    npm install
-   '''
+   ```
 4. Start the app:
-   '''
+   ```
    npm start
-   '''
+   ```
 5. You can now access the app on your local machine by either scanning the QR code generated in Command Line/Terminal window or pressing i to open up an iOS simulator(with XCode installed).
 
 ## Usage <a name="usage"></a>
