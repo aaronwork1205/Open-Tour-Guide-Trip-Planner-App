@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import Invite from "../screens/InviteScreen";
-import MapView from "../screens/MapViewScreen";
+import MapScreen from "../screens/MapViewScreen";
 import CalendarView from "../screens/CalendarViewScreen";
 
 const Tab = createBottomTabNavigator();
@@ -40,7 +40,7 @@ export const HomeTabs = () => {
         options={{ title: "Home" }}
         component={HomeScreen}
       />
-      <Tab.Screen name="MapView" component={MapView} />
+      <Tab.Screen name="MapView" component={MapScreen} />
       <Tab.Screen name="CalendarView" component={CalendarView} />
     </Tab.Navigator>
   );
