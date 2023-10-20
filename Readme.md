@@ -14,7 +14,6 @@ Welcome to the Open Tour Guide (Trip Planner) App! This is the front-end part of
 5. [License](#license)
 
 ## Features <a name="features"></a>
-- **User-Friendly Interface**: The app offers an intuitive and user-friendly interface, making trip planning a breeze.
 
 - **Create and Edit Trips**: You can easily create new trips and edit existing ones, adding destinations, activities, and more.
 
@@ -58,9 +57,7 @@ Here's how you can use the Open Tour Guide App:
 
 5. **Explore Recommendations**: Receive personalized recommendations for attractions, restaurants, and accommodations at your destinations.
 
-6. **Check Weather**: Stay updated on the weather conditions at your trip destinations.
-
-7. **Access Offline**: Even when you're offline, you can access your trip plans and information.
+6. **Access Offline**: Even when you're offline, you can access your trip plans and information.
 
 
 ## License <a name="license"></a>
