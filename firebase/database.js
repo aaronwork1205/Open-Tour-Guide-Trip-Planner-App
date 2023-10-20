@@ -2,6 +2,10 @@ import { FIREBASE_AUTH } from "./firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "./firebase";
 
+
+
+
+
 export const addUser = async (email) => {
   await setDoc(doc(FIRESTORE_DB, "users", email), {
     name: "Placeholder Name",
@@ -39,8 +43,36 @@ export const getEvents = async () => {
       tripIds.map(async (trip) => {
         const tripSnap = await getDoc(trip);
         const tripData = tripSnap.data();
-        return {};
+        return {tripData};
       })
     );
   }
 };
+// export const setEvent = async (eventData) => {
+//   try {
+//     // Reference to the Firestore collection where you want to store events
+//     const eventsCollection = collection(FIRESTORE_DB, 'trips'); // Replace with your events collection name
+//
+//     // Add the event data to the Firestore collection
+//     const docRef = await setDoc(eventsCollection, eventData);
+//
+//     console.log('Event added with ID: ', docRef.id);
+//     return docRef.id; // Return the ID of the added event
+//   } catch (error) {
+//     console.error('Error adding event:', error);
+//     return null; // Return null to indicate an error occurred
+//   }
+// };
+
+
+//
+// export const getTrips = async () => {
+//   const uid = FIREBASE_AUTH.currentUser.uid;
+//   const docRef = doc(FIRESTORE_DB, "trips", uid);
+//   const docSnap = await getDoc(docRef);
+//
+//
+//
+//
+//
+// }

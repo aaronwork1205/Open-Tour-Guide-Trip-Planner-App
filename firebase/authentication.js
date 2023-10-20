@@ -25,6 +25,7 @@ export const signIn = (email, password) => {
   signInWithEmailAndPassword(FIREBASE_AUTH, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
+
     })
     .catch((error) => {
       const errorCode = error.code;
