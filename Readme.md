@@ -1,4 +1,4 @@
-# CS_8803_MAS_fall2023
+# CS8803 MAS Fall2023
 
 ## Open Tour Guide (Trip Planner) App
 ### Author: Wenhao Wang, Xingjian Bi, Jiayue Meng, Brandon Yang
