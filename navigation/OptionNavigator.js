@@ -9,7 +9,7 @@ export const navOptions = (navigation, route) => {
       backgroundColor: "#0f172a",
     },
     headerLeft: () => {
-      if (route.name === "Home") {
+      if (route.name === "Trips") {
         return (
           <Ionicons
             name="menu"
