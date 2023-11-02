@@ -1,10 +1,6 @@
 import { FIREBASE_AUTH } from "./firebase";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
 import { FIRESTORE_DB } from "./firebase";
-
-
-
-
 
 export const addUser = async (email) => {
   await setDoc(doc(FIRESTORE_DB, "users", email), {
@@ -33,6 +29,23 @@ export const addCollaborator = async (email, trip, access) => {
   });
 };
 
+export const getTrips = async () => {
+  // Get the trips current user has access to
+  const email = FIREBASE_AUTH.currentUser.email;
+  const tripsSnapshot = await getDocs(
+    collection(FIRESTORE_DB, "users", email, "trips")
+  );
+  const trips = [];
+  tripsSnapshot.forEach((doc) => {
+    trips.push({
+      tripId: doc.id,
+      ...doc.data(),
+    });
+  });
+  console.log(trips);
+  return trips;
+};
+
 export const getEvents = async () => {
   const uid = FIREBASE_AUTH.currentUser.uid;
   const docRef = doc(FIRESTORE_DB, "users", uid);
@@ -43,7 +56,7 @@ export const getEvents = async () => {
       tripIds.map(async (trip) => {
         const tripSnap = await getDoc(trip);
         const tripData = tripSnap.data();
-        return {tripData};
+        return { tripData };
       })
     );
   }
@@ -63,7 +76,6 @@ export const getEvents = async () => {
 //     return null; // Return null to indicate an error occurred
 //   }
 // };
-
 
 //
 // export const getTrips = async () => {

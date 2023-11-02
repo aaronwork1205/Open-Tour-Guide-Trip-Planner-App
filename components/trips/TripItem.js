@@ -1,15 +1,23 @@
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 
-const TripItem = ({ id, title, description }) => {
+const TripItem = ({ tripId, title, startDate, endDate, setTripId }) => {
   const navigation = useNavigation();
+  const start = new Date(startDate);
+  const end = new Date(endDate);
   return (
     <TouchableOpacity
       style={styles.card}
-      onPress={() => navigation.navigate("Home")}
+      onPress={() => {
+        setTripId(tripId);
+        navigation.navigate("Home", {
+          tripId,
+        });
+      }}
     >
-      <Text>{title}</Text>
-      <Text>{description}</Text>
+      <Text style={{ fontSize: 20, paddingBottom: 5 }}>{title}</Text>
+      <Text>{start.toDateString()}</Text>
+      <Text>{end.toDateString()}</Text>
     </TouchableOpacity>
   );
 };

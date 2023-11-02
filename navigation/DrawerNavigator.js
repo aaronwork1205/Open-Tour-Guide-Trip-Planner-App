@@ -3,7 +3,7 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { HomeStack, ProfileStack, TripsStack } from "./StackNavigator";
+import { ProfileStack, TripsStack } from "./StackNavigator";
 import { SafeAreaView, Image, View, Linking } from "react-native";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import TripsScreen from "../screens/TripsScreen";
@@ -43,10 +43,10 @@ export const MyDrawer = () => {
       screenOptions={{ headerShown: false }}
     >
       <Drawer.Screen
-        name="HomeStack"
-        component={HomeStack}
+        name="TripsStack"
+        component={TripsStack}
         options={{
-          title: "Home",
+          title: "Trips",
           drawerIcon: () => <Ionicons name="home" size={22} />,
         }}
       />
