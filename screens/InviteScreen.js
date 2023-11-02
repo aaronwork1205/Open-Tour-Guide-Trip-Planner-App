@@ -10,9 +10,8 @@ import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 import { FIRESTORE_DB } from "../firebase/firebase";
-import { doc, setDoc, getDoc } from "../firebase/firebase";
 import { addCollaborator } from "../firebase/database";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 
 const initialCollaborators = [
   {
@@ -38,17 +37,18 @@ const initialCollaborators = [
   },
 ];
 
-function Invite({ navigation }) {
+function Invite({ navigation, route }) {
   const [collaborators, setCollaborators] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
+  const tripId = route.params.tripId;
 
   useEffect(() => {
     const collaboratorsRef = collection(
       FIRESTORE_DB,
       "trips",
-      "slWluB5kkySIVOyIfc1r",
+      tripId,
       "collaborators"
     );
 
@@ -61,7 +61,7 @@ function Invite({ navigation }) {
             ...doc.data(),
           });
         });
-        console.log(collaborators);
+        setCollaborators(collaborators);
       },
     });
 
@@ -70,11 +70,10 @@ function Invite({ navigation }) {
 
   // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
-  const handleDelete = (collaborator) => {
-    const newCollaborators = collaborators.filter(
-      (c) => c.id !== collaborator.id
+  const handleDelete = async (email) => {
+    await deleteDoc(
+      doc(FIRESTORE_DB, "trips", "slWluB5kkySIVOyIfc1r", "collaborators", email)
     );
-    setCollaborators(newCollaborators);
   };
 
   return (
@@ -82,33 +81,24 @@ function Invite({ navigation }) {
       <FlatList
         style={{ backgroundColor: "tomato" }}
         data={collaborators}
-        keyExtractor={(c) => c.id.toString()}
         renderItem={({ item }) => (
           <ListItem
             title={item.name}
             subTitle={item.email}
-            image={item.image}
+            image={{ uri: item.image }}
             onPress={() => {
               console.log("Message selected", item);
               navigation.navigate("CollaboratorDetail", { collaborator: item });
             }}
             renderRightActions={() => (
-              <ListItemDeleteAction onPress={() => handleDelete(item)} />
+              <ListItemDeleteAction
+                onPress={async () => await handleDelete(item.email)}
+              />
             )}
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}
         refreshing={refreshing}
-        onRefresh={() =>
-          setCollaborators([
-            {
-              id: 2,
-              title: "T1",
-              description: "D1",
-              image: require("../assets/lb.jpg"),
-            },
-          ])
-        }
       />
       <AppText style={styles.SepTitleInvite}>Add a Collaborator</AppText>
 

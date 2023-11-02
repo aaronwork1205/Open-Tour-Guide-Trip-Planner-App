@@ -2,7 +2,7 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import Invite from "../screens/InviteScreen";
 
-export const navOptions = (navigation, route) => {
+export const navOptions = (navigation, route, tripId) => {
   return {
     headerTintColor: "#cbd5e1",
     headerStyle: {
@@ -39,7 +39,7 @@ export const navOptions = (navigation, route) => {
             size={32}
             color="white"
             style={{ paddingRight: 15 }}
-            onPress={() => navigation.navigate("Invite")}
+            onPress={() => navigation.navigate("Invite", { tripId: tripId })}
           />
         );
       } else {

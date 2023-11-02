@@ -1,11 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, Button } from "react-native";
 import EventList from "../components/events/EventList";
-const HomeScreen = () => {
-  const navigation = useNavigation();
+const HomeScreen = ({ navigation, route }) => {
   return (
     <View styles={styles.screen}>
-      <EventList />
+      <EventList tripId={route.params.tripId} />
     </View>
   );
 };

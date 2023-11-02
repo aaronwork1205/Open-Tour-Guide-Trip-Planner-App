@@ -2,12 +2,32 @@ import { View, Text, FlatList, RefreshControl, ScrollView } from "react-native";
 import { DUMMY_DATA } from "../../data/dummy";
 import "firebase/firestore";
 import TripItem from "./TripItem";
+import { useEffect, useState } from "react";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebase/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+import { getTrips } from "../../firebase/database";
 
-const TripList = () => {
+const TripList = ({ setTripId }) => {
+  const [trips, setTrips] = useState([{}]);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      const newTrips = await getTrips();
+      setTrips(newTrips);
+    };
+    fetchTrips();
+  }, []);
+
   const renderItem = ({ item }) => {
     return (
       <View>
-        <TripItem title={item.title} description={item.description} />
+        <TripItem
+          tripId={item.tripId}
+          title={item.destination}
+          startDate={item.startDate}
+          endDate={item.endDate}
+          setTripId={setTripId}
+        />
       </View>
     );
   };
@@ -37,13 +57,16 @@ const TripList = () => {
           shadowRadius: 0,
           margin: 0,
         }}
-        data={DUMMY_DATA}
+        data={trips}
         // keyExtractor={(item) => item.id}
         renderItem={renderItem}
         refreshControl={
           <RefreshControl
             refreshing={false}
-            onRefresh={() => console.log("refreshing")}
+            onRefresh={async () => {
+              const newTrips = await getTrips();
+              setTrips(newTrips);
+            }}
           />
         }
       />
