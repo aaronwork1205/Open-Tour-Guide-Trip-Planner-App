@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import { clearUsers } from "../../firebase/database";
 
 const TripItem = ({ tripId, title, startDate, endDate, setTripId }) => {
   const navigation = useNavigation();

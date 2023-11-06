@@ -1,5 +1,12 @@
 import { FIREBASE_AUTH } from "./firebase";
-import { doc, setDoc, getDoc, collection, getDocs } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "./firebase";
 
 export const addUser = async (email) => {
@@ -23,7 +30,25 @@ const getUserInfo = async (email) => {
   }
 };
 
+const getBasicTripInfo = async (tripId) => {
+  console.log(tripId);
+  // Get destination, startDate, endDate
+  const docSnap = await getDoc(doc(FIRESTORE_DB, "trips", tripId));
+  if (docSnap.exists()) {
+    const trip = docSnap.data();
+    console.log(trip);
+    return {
+      destination: trip.destination,
+      startDate: trip.startDate,
+      endDate: trip.endDate,
+    };
+  } else {
+    throw Error("Trip does not exist");
+  }
+};
+
 export const addCollaborator = async (email, trip, access) => {
+  // Add user to trips > collaborators collection
   userInfo = await getUserInfo(email);
   console.log(userInfo);
   await setDoc(doc(FIRESTORE_DB, "trips", trip, "collaborators", email), {
@@ -31,6 +56,20 @@ export const addCollaborator = async (email, trip, access) => {
     access: access,
     image: userInfo.image,
   });
+
+  // Add trip to user > trips collection
+  const tripInfo = await getBasicTripInfo(trip);
+  tripInfo.access = access;
+  console.log(tripInfo);
+  await setDoc(doc(FIRESTORE_DB, "users", email, "trips", trip), tripInfo);
+};
+
+export const removeCollaborator = async (email, tripId) => {
+  // delete user from trips > collaborators
+  await deleteDoc(doc(FIRESTORE_DB, "trips", tripId, "collaborators", email));
+
+  // delete trip from users > trips
+  await deleteDoc(doc(FIRESTORE_DB, "users", email, "trips", tripId));
 };
 
 export const getTrips = async () => {
@@ -63,6 +102,27 @@ export const getEvents = async () => {
         return { tripData };
       })
     );
+  }
+};
+
+export const clearUsers = async () => {
+  const keep = [
+    "ppyang2002@gmail.com",
+    "wenhaowang@gmail.com",
+    "joyce@gmail.com",
+    "bixingjian19@gmail.com",
+  ];
+  const remove = [];
+
+  const usersSnapshot = await getDocs(collection(FIRESTORE_DB, "users"));
+  usersSnapshot.docs.forEach((doc) => {
+    if (!keep.includes(doc.id)) {
+      remove.push(doc.id);
+    }
+  });
+
+  for (const user of remove) {
+    await deleteDoc(doc(FIRESTORE_DB, "users", user));
   }
 };
 // export const setEvent = async (eventData) => {

@@ -10,131 +10,61 @@ import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 import { FIRESTORE_DB } from "../firebase/firebase";
-import { addCollaborator } from "../firebase/database";
+import { addCollaborator, removeCollaborator } from "../firebase/database";
+import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 
-import { collection, onSnapshot, getDocs } from "firebase/firestore";
-
-// const initialCollaborators = [
-//   {
-//     name: "LB",
-//     email: "bixingjian19@gmail.com",
-//     access: "View",
-//     image: require("../assets/lb.jpg"),
-//   },
-//   {
-//     name: "Minion",
-//     email: "minion@gmail.com",
-//     access: "View",
-//     image: require("../assets/minion.jpg"),
-//   },
-//   {
-//     name: "Brandon",
-//     email: "brandon@gmail.com",
-//     access: "Edit",
-//     image: require("../assets/brandon.jpg"),
-//   },
-// ];
-
-function Invite({ navigation }) {
-  const [collaborators, setCollaborators] = useState([]);
+function Invite({ navigation, route }) {
+  const [collaborators, setCollaborators] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
-  const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
-  // const tripId = route.params.tripId;
-
-  // TODO: tripId not found.
-  // useEffect(() => {
-  //   const collaboratorsRef = collection(
-  //     FIRESTORE_DB,
-  //     "trips",
-  //     tripId,
-  //     "collaborators"
-  //   );
-
-  //   const subscriber = onSnapshot(collaboratorsRef, {
-  //     next: (snapshot) => {
-  //       const collaborators = [];
-  //       snapshot.docs.forEach((doc) => {
-  //         collaborators.push({
-  //           email: doc.id,
-  //           ...doc.data(),
-  //         });
-  //       });
-  //       setCollaborators(collaborators);
-  //     },
-  //   });
-
-  //   return () => subscriber();
-  // }, []);
+  const [selectedMode, setSelectedMode] = useState("Viewer"); // defaults to "View"
+  const tripId = route.params.tripId;
 
   useEffect(() => {
     const collaboratorsRef = collection(
       FIRESTORE_DB,
       "trips",
-      "slWluB5kkySIVOyIfc1r",
+      tripId,
       "collaborators"
     );
 
-    // Establishing real-time listener to Firestore changes
-    const unsubscribe = onSnapshot(collaboratorsRef, (snapshot) => {
-      const fetchedCollaborators = [];
-      snapshot.docs.forEach((doc) => {
-        fetchedCollaborators.push({
-          email: doc.id,
-          ...doc.data(),
+    const subscriber = onSnapshot(collaboratorsRef, {
+      next: (snapshot) => {
+        const collaborators = [];
+        snapshot.docs.forEach((doc) => {
+          collaborators.push({
+            email: doc.id,
+            ...doc.data(),
+          });
         });
-      });
-      setCollaborators(fetchedCollaborators); // Update state with fetched collaborators
+        setCollaborators(collaborators);
+      },
     });
 
-    // Cleanup the subscription on component unmount
-    return () => unsubscribe();
+    return () => subscriber();
   }, []);
 
-  const handleDelete = (collaborator) => {
-    const newCollaborators = collaborators.filter(
-      (c) => c.email !== collaborator.email
-    );
-  };
-
-  // const getData = async () => {
-  //   console.log("getting data");
-
-  //   // Getting the collaborators collection inside the specific trip
-  //   const collabCollection = collection(
-  //     FIRESTORE_DB,
-  //     "trips",
-  //     "slWluB5kkySIVOyIfc1r",
-  //     "collaborators"
-  //   );
-  //   const querySnapshot = await getDocs(collabCollection);
-  //   if (!querySnapshot.empty) {
-  //     querySnapshot.forEach((doc) => {
-  //       console.log(doc.id, " => ", doc.data());
-  //     });
-  //   } else {
-  //     console.log("No collaborators found");
-  //   }
-  // };
+  // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
   return (
     <Screen style={{ flex: "auto" }}>
       <FlatList
         style={{ backgroundColor: "tomato" }}
         data={collaborators}
-        keyExtractor={(c) => c.email}
         renderItem={({ item }) => (
           <ListItem
             title={item.name}
             subTitle={item.email}
-            image={item.image}
+            image={{ uri: item.image }}
             onPress={() => {
               console.log("Message selected", item);
               navigation.navigate("CollaboratorDetail", { collaborator: item });
             }}
             renderRightActions={() => (
               <ListItemDeleteAction
-                onPress={async () => await handleDelete(item.email)}
+                onPress={async () =>
+                  await removeCollaborator(item.email, tripId)
+                }
               />
             )}
           />
@@ -159,18 +89,15 @@ function Invite({ navigation }) {
         />
 
         <AppButton
-          title="Add"
+          title="Send"
           color="secondary"
           width="50%"
           alignSelf="center"
           onPress={async () => {
-            console.log(invitePersonEmail);
-            console.log(selectedMode);
             setInvitePersonEmail("");
-            await addCollaborator(
-              invitePersonEmail,
-              "slWluB5kkySIVOyIfc1r",
-              selectedMode
+            await addCollaborator(invitePersonEmail, tripId, selectedMode);
+            console.log(
+              `Added ${invitePersonEmail} (${selectedMode}) to trip ${tripId}`
             );
           }}
         />
