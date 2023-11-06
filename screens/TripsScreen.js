@@ -1,10 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, Button } from "react-native";
 import EventList from "../components/events/EventList";
-const HomeScreen = ({ navigation, route }) => {
+import TripList from "../components/trips/TripList";
+const TripsScreen = ({ route, navigation }) => {
   return (
     <View styles={styles.screen}>
-      <EventList tripId={route.params.tripId} />
+      <TripList setTripId={route.params.setTrip} />
     </View>
   );
 };
@@ -15,4 +15,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default TripsScreen;

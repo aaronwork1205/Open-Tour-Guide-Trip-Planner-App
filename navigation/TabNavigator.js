@@ -2,11 +2,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/HomeScreen";
 import { Ionicons } from "@expo/vector-icons";
 import Invite from "../screens/InviteScreen";
-import MapView from "../screens/MapViewScreen";
+import MapScreen from "../screens/MapViewScreen";
 import CalendarView from "../screens/CalendarViewScreen";
 
 const Tab = createBottomTabNavigator();
-export const HomeTabs = () => {
+export const HomeTabs = ({ navigation, route }) => {
+  console.log("Entering Trip: " + route.params.tripId);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -37,10 +38,10 @@ export const HomeTabs = () => {
     >
       <Tab.Screen
         name="HomeTabs"
-        options={{ title: "Home" }}
         component={HomeScreen}
+        initialParams={{ tripId: route.params.tripId }}
       />
-      <Tab.Screen name="MapView" component={MapView} />
+      <Tab.Screen name="MapView" component={MapScreen} />
       <Tab.Screen name="CalendarView" component={CalendarView} />
     </Tab.Navigator>
   );

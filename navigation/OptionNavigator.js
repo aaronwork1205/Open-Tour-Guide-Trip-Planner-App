@@ -2,14 +2,14 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text } from "react-native";
 import Invite from "../screens/InviteScreen";
 
-export const navOptions = (navigation, route) => {
+export const navOptions = (navigation, route, tripId) => {
   return {
     headerTintColor: "#cbd5e1",
     headerStyle: {
       backgroundColor: "#0f172a",
     },
     headerLeft: () => {
-      if (route.name === "Home") {
+      if (route.name === "Trips") {
         return (
           <Ionicons
             name="menu"
@@ -39,7 +39,7 @@ export const navOptions = (navigation, route) => {
             size={32}
             color="white"
             style={{ paddingRight: 15 }}
-            onPress={() => navigation.navigate("Invite")}
+            onPress={() => navigation.navigate("Invite", { tripId: tripId })}
           />
         );
       } else {
