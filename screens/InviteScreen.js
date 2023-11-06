@@ -11,34 +11,32 @@ import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 import { FIRESTORE_DB } from "../firebase/firebase";
 import { addCollaborator } from "../firebase/database";
-import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
 
-const initialCollaborators = [
-  {
-    id: 1,
-    name: "LB",
-    email: "bixingjian19@gmail.com",
-    access: "View",
-    image: require("../assets/lb.jpg"),
-  },
-  {
-    id: 2,
-    name: "Minion",
-    email: "minion@gmail.com",
-    access: "View",
-    image: require("../assets/minion.jpg"),
-  },
-  {
-    id: 3,
-    name: "Brandon",
-    email: "brandon@gmail.com",
-    access: "Edit",
-    image: require("../assets/brandon.jpg"),
-  },
-];
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
 
-function Invite({ navigation, route }) {
-  const [collaborators, setCollaborators] = useState();
+// const initialCollaborators = [
+//   {
+//     name: "LB",
+//     email: "bixingjian19@gmail.com",
+//     access: "View",
+//     image: require("../assets/lb.jpg"),
+//   },
+//   {
+//     name: "Minion",
+//     email: "minion@gmail.com",
+//     access: "View",
+//     image: require("../assets/minion.jpg"),
+//   },
+//   {
+//     name: "Brandon",
+//     email: "brandon@gmail.com",
+//     access: "Edit",
+//     image: require("../assets/brandon.jpg"),
+//   },
+// ];
+
+function Invite({ navigation }) {
+  const [collaborators, setCollaborators] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
@@ -68,19 +66,62 @@ function Invite({ navigation, route }) {
     return () => subscriber();
   }, []);
 
-  // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
+  useEffect(() => {
+    const collaboratorsRef = collection(
+      FIRESTORE_DB,
+      "trips",
+      "slWluB5kkySIVOyIfc1r",
+      "collaborators"
+    );
 
-  const handleDelete = async (email) => {
-    await deleteDoc(
-      doc(FIRESTORE_DB, "trips", "slWluB5kkySIVOyIfc1r", "collaborators", email)
+    // Establishing real-time listener to Firestore changes
+    const unsubscribe = onSnapshot(collaboratorsRef, (snapshot) => {
+      const fetchedCollaborators = [];
+      snapshot.docs.forEach((doc) => {
+        fetchedCollaborators.push({
+          email: doc.id,
+          ...doc.data(),
+        });
+      });
+      setCollaborators(fetchedCollaborators); // Update state with fetched collaborators
+    });
+
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
+  }, []);
+
+  const handleDelete = (collaborator) => {
+    const newCollaborators = collaborators.filter(
+      (c) => c.email !== collaborator.email
     );
   };
+
+  // const getData = async () => {
+  //   console.log("getting data");
+
+  //   // Getting the collaborators collection inside the specific trip
+  //   const collabCollection = collection(
+  //     FIRESTORE_DB,
+  //     "trips",
+  //     "slWluB5kkySIVOyIfc1r",
+  //     "collaborators"
+  //   );
+  //   const querySnapshot = await getDocs(collabCollection);
+  //   if (!querySnapshot.empty) {
+  //     querySnapshot.forEach((doc) => {
+  //       console.log(doc.id, " => ", doc.data());
+  //     });
+  //   } else {
+  //     console.log("No collaborators found");
+  //   }
+  // };
 
   return (
     <Screen style={{ flex: "auto" }}>
       <FlatList
         style={{ backgroundColor: "tomato" }}
         data={collaborators}
+        keyExtractor={(c) => c.email}
         renderItem={({ item }) => (
           <ListItem
             title={item.name}
@@ -117,7 +158,7 @@ function Invite({ navigation, route }) {
         />
 
         <AppButton
-          title="Send"
+          title="Add"
           color="secondary"
           width="50%"
           alignSelf="center"
@@ -128,7 +169,7 @@ function Invite({ navigation, route }) {
             await addCollaborator(
               invitePersonEmail,
               "slWluB5kkySIVOyIfc1r",
-              "Edit"
+              selectedMode
             );
           }}
         />

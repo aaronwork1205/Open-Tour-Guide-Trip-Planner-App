@@ -17,7 +17,7 @@ function CollaboratorDetail({ route }) {
 
   return (
     <View style={styles.container}>
-      <Image source={collaborator.image} style={styles.image} />
+      <Image source={{ url: collaborator.image }} style={styles.image} />
       <AppText style={styles.name}>{collaborator.name}</AppText>
 
       <View style={styles.section}>
