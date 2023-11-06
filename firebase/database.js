@@ -23,6 +23,7 @@ const getUserInfo = async (email) => {
     return {
       name: user.name,
       trips: user.trips,
+      image: user.image,
     };
   } else {
     throw Error("User does not exist");
@@ -49,8 +50,11 @@ const getBasicTripInfo = async (tripId) => {
 export const addCollaborator = async (email, trip, access) => {
   // Add user to trips > collaborators collection
   userInfo = await getUserInfo(email);
+  console.log(userInfo);
   await setDoc(doc(FIRESTORE_DB, "trips", trip, "collaborators", email), {
     name: userInfo.name,
+    access: access,
+    image: userInfo.image,
   });
 
   // Add trip to user > trips collection
