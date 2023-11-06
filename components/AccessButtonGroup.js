@@ -2,27 +2,39 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 export default function AccessButtonGroup({ onSelectionChange }) {
-  const [selected, setSelected] = useState("View"); // Default to "View"
+  const [selected, setSelected] = useState("Viewer"); // Default to "View"
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={[styles.button, selected === "View" && styles.buttonSelected]}
+        style={[styles.button, selected === "Admin" && styles.buttonSelected]}
         onPress={() => {
-          setSelected("View");
-          onSelectionChange("View");
+          setSelected("Admin");
+          onSelectionChange("Admin");
         }}
       >
-        <Text style={styles.text}>View</Text>
+        <Text style={styles.text}>Admin</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.button, selected === "Edit" && styles.buttonSelected]}
+        style={[
+          styles.button,
+          selected === "Collaborator" && styles.buttonSelected,
+        ]}
         onPress={() => {
-          setSelected("Edit");
-          onSelectionChange("Edit");
+          setSelected("Collaborator");
+          onSelectionChange("Collaborator");
         }}
       >
-        <Text style={styles.text}>Edit</Text>
+        <Text style={styles.text}>Collaborator</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.button, selected === "Viewer" && styles.buttonSelected]}
+        onPress={() => {
+          setSelected("Viewer");
+          onSelectionChange("Viewer");
+        }}
+      >
+        <Text style={styles.text}>Viewer</Text>
       </TouchableOpacity>
     </View>
   );

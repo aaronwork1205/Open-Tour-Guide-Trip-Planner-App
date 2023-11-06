@@ -10,38 +10,14 @@ import AppTextInput from "../components/AppTextInput";
 import AppButton from "../components/AppButton";
 import AccessButtonGroup from "../components/AccessButtonGroup"; // Assuming this path
 import { FIRESTORE_DB } from "../firebase/firebase";
-import { addCollaborator } from "../firebase/database";
+import { addCollaborator, removeCollaborator } from "../firebase/database";
 import { collection, doc, deleteDoc, onSnapshot } from "firebase/firestore";
-
-const initialCollaborators = [
-  {
-    id: 1,
-    name: "LB",
-    email: "bixingjian19@gmail.com",
-    access: "View",
-    image: require("../assets/lb.jpg"),
-  },
-  {
-    id: 2,
-    name: "Minion",
-    email: "minion@gmail.com",
-    access: "View",
-    image: require("../assets/minion.jpg"),
-  },
-  {
-    id: 3,
-    name: "Brandon",
-    email: "brandon@gmail.com",
-    access: "Edit",
-    image: require("../assets/brandon.jpg"),
-  },
-];
 
 function Invite({ navigation, route }) {
   const [collaborators, setCollaborators] = useState();
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
-  const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
+  const [selectedMode, setSelectedMode] = useState("Viewer"); // defaults to "View"
   const tripId = route.params.tripId;
 
   useEffect(() => {
@@ -70,12 +46,6 @@ function Invite({ navigation, route }) {
 
   // const [invitedFriends, setInvitedFriends] = useState(initialFriends);
 
-  const handleDelete = async (email) => {
-    await deleteDoc(
-      doc(FIRESTORE_DB, "trips", "slWluB5kkySIVOyIfc1r", "collaborators", email)
-    );
-  };
-
   return (
     <Screen style={{ flex: "auto" }}>
       <FlatList
@@ -92,7 +62,9 @@ function Invite({ navigation, route }) {
             }}
             renderRightActions={() => (
               <ListItemDeleteAction
-                onPress={async () => await handleDelete(item.email)}
+                onPress={async () =>
+                  await removeCollaborator(item.email, tripId)
+                }
               />
             )}
           />
@@ -122,13 +94,10 @@ function Invite({ navigation, route }) {
           width="50%"
           alignSelf="center"
           onPress={async () => {
-            console.log(invitePersonEmail);
-            console.log(selectedMode);
             setInvitePersonEmail("");
-            await addCollaborator(
-              invitePersonEmail,
-              "slWluB5kkySIVOyIfc1r",
-              "Edit"
+            await addCollaborator(invitePersonEmail, tripId, selectedMode);
+            console.log(
+              `Added ${invitePersonEmail} (${selectedMode}) to trip ${tripId}`
             );
           }}
         />
