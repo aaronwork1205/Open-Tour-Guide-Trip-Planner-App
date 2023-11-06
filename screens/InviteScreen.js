@@ -40,29 +40,29 @@ function Invite({ navigation }) {
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
 
-  // useEffect(() => {
-  //   const collaboratorsRef = collection(
-  //     FIRESTORE_DB,
-  //     "trips",
-  //     "slWluB5kkySIVOyIfc1r",
-  //     "collaborators"
-  //   );
+  useEffect(() => {
+    const collaboratorsRef = collection(
+      FIRESTORE_DB,
+      "trips",
+      "slWluB5kkySIVOyIfc1r",
+      "collaborators"
+    );
 
-  //   const subscriber = onSnapshot(collaboratorsRef, {
-  //     next: (snapshot) => {
-  //       const collaborators = [];
-  //       snapshot.docs.forEach((doc) => {
-  //         collaborators.push({
-  //           email: doc.id,
-  //           ...doc.data(),
-  //         });
-  //       });
-  //       console.log(collaborators);
-  //     },
-  //   });
+    const subscriber = onSnapshot(collaboratorsRef, {
+      next: (snapshot) => {
+        const collaborators = [];
+        snapshot.docs.forEach((doc) => {
+          collaborators.push({
+            email: doc.id,
+            ...doc.data(),
+          });
+        });
+        console.log(collaborators);
+      },
+    });
 
-  //   return () => subscriber();
-  // }, []);
+    return () => subscriber();
+  }, []);
 
   useEffect(() => {
     const collaboratorsRef = collection(
@@ -90,7 +90,7 @@ function Invite({ navigation }) {
 
   const handleDelete = (collaborator) => {
     const newCollaborators = collaborators.filter(
-      (c) => c.id !== collaborator.id
+      (c) => c.email !== collaborator.email
     );
     setCollaborators(newCollaborators);
   };
@@ -165,7 +165,7 @@ function Invite({ navigation }) {
         />
 
         <AppButton
-          title="Send"
+          title="Add"
           color="secondary"
           width="50%"
           alignSelf="center"
