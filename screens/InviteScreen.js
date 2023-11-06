@@ -40,31 +40,32 @@ function Invite({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("View"); // defaults to "View"
-  const tripId = route.params.tripId;
+  // const tripId = route.params.tripId;
 
-  useEffect(() => {
-    const collaboratorsRef = collection(
-      FIRESTORE_DB,
-      "trips",
-      tripId,
-      "collaborators"
-    );
+  // TODO: tripId not found.
+  // useEffect(() => {
+  //   const collaboratorsRef = collection(
+  //     FIRESTORE_DB,
+  //     "trips",
+  //     tripId,
+  //     "collaborators"
+  //   );
 
-    const subscriber = onSnapshot(collaboratorsRef, {
-      next: (snapshot) => {
-        const collaborators = [];
-        snapshot.docs.forEach((doc) => {
-          collaborators.push({
-            email: doc.id,
-            ...doc.data(),
-          });
-        });
-        setCollaborators(collaborators);
-      },
-    });
+  //   const subscriber = onSnapshot(collaboratorsRef, {
+  //     next: (snapshot) => {
+  //       const collaborators = [];
+  //       snapshot.docs.forEach((doc) => {
+  //         collaborators.push({
+  //           email: doc.id,
+  //           ...doc.data(),
+  //         });
+  //       });
+  //       setCollaborators(collaborators);
+  //     },
+  //   });
 
-    return () => subscriber();
-  }, []);
+  //   return () => subscriber();
+  // }, []);
 
   useEffect(() => {
     const collaboratorsRef = collection(
@@ -126,7 +127,7 @@ function Invite({ navigation }) {
           <ListItem
             title={item.name}
             subTitle={item.email}
-            image={{ uri: item.image }}
+            image={item.image}
             onPress={() => {
               console.log("Message selected", item);
               navigation.navigate("CollaboratorDetail", { collaborator: item });
