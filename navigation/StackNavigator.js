@@ -28,7 +28,11 @@ export const TripsStack = () => {
       />
       <Stack.Screen name="Home" component={HomeTabs} />
       <Stack.Screen name="Event" component={EventDetailScreen} />
-      <Stack.Screen name="Invite" component={Invite} />
+      <Stack.Screen
+        name="Invite"
+        component={Invite}
+        // options={{ headerShown: false }}
+      />
       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />
     </Stack.Navigator>
   );
@@ -44,3 +48,14 @@ export const ProfileStack = () => {
     </Stack.Navigator>
   );
 };
+
+// export const InviteStack = () => {
+//   return (
+//     <Stack.Navigator
+//     // screenOptions={({ navigation, route }) => navOptions(navigation, route)}
+//     >
+//       <Stack.Screen name="Invite" component={Invite} />
+//       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />
+//     </Stack.Navigator>
+//   );
+// };
