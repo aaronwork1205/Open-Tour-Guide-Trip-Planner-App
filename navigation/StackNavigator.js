@@ -2,7 +2,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import EventDetailScreen from "../screens/EventDetailScreen";
 import { HomeTabs } from "./TabNavigator";
 import { navOptions } from "./OptionNavigator";
-import { useNavigation } from "@react-navigation/native";
 import ProfilesScreen from "../screens/profiles/ProfilesScreen";
 import ProfileDetailScreen from "../screens/profiles/ProfileDetailScreen";
 import Invite from "../screens/InviteScreen";
@@ -26,7 +25,8 @@ export const TripsStack = () => {
         component={TripsScreen}
         initialParams={{ setTrip: setTripId }}
       />
-      <Stack.Screen name="Home" component={HomeTabs} />
+      {/* hide title / implement diff titles for diff tabs */}
+      <Stack.Screen name="Home" component={HomeTabs} options={{ title: "" }} />
       <Stack.Screen name="Event" component={EventDetailScreen} />
       <Stack.Screen name="Invite" component={Invite} />
       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />

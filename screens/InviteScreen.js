@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, View } from "react-native";
 
 import ListItem from "../components/lists/ListItem";
 import Screen from "../components/Screen";
@@ -18,7 +18,10 @@ function Invite({ navigation, route }) {
   const [refreshing, setRefreshing] = useState(false);
   const [invitePersonEmail, setInvitePersonEmail] = useState("");
   const [selectedMode, setSelectedMode] = useState("Viewer"); // defaults to "View"
+
   const tripId = route.params.tripId;
+  const screenHeight = Dimensions.get("window").height;
+  const listMaxHeight = screenHeight * 0.6;
 
   useEffect(() => {
     const collaboratorsRef = collection(
@@ -48,30 +51,34 @@ function Invite({ navigation, route }) {
 
   return (
     <Screen style={{ flex: "auto" }}>
-      <FlatList
-        style={{ backgroundColor: "tomato" }}
-        data={collaborators}
-        renderItem={({ item }) => (
-          <ListItem
-            title={item.name}
-            subTitle={item.email}
-            image={{ uri: item.image }}
-            onPress={() => {
-              console.log("Message selected", item);
-              navigation.navigate("CollaboratorDetail", { collaborator: item });
-            }}
-            renderRightActions={() => (
-              <ListItemDeleteAction
-                onPress={async () =>
-                  await removeCollaborator(item.email, tripId)
-                }
-              />
-            )}
-          />
-        )}
-        ItemSeparatorComponent={ListItemSeparator}
-        refreshing={refreshing}
-      />
+      <View style={{ maxHeight: listMaxHeight }}>
+        <FlatList
+          style={{ backgroundColor: "tomato" }}
+          data={collaborators}
+          renderItem={({ item }) => (
+            <ListItem
+              title={item.name}
+              subTitle={item.email}
+              image={{ uri: item.image }}
+              onPress={() => {
+                console.log("Message selected", item);
+                navigation.navigate("CollaboratorDetail", {
+                  collaborator: item,
+                });
+              }}
+              renderRightActions={() => (
+                <ListItemDeleteAction
+                  onPress={async () =>
+                    await removeCollaborator(item.email, tripId)
+                  }
+                />
+              )}
+            />
+          )}
+          ItemSeparatorComponent={ListItemSeparator}
+          refreshing={refreshing}
+        />
+      </View>
       <AppText style={styles.SepTitleInvite}>Add a Collaborator</AppText>
 
       <View style={{ alignItems: "center", margin: 10 }}>
