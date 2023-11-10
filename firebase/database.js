@@ -105,6 +105,16 @@ export const getEvents = async () => {
   }
 };
 
+export const addPlace = async (placeDetails, tripId) => {
+  await setDoc(
+    doc(FIRESTORE_DB, "trips", tripId, "events", placeDetails.name),
+    {
+      detailedName: placeDetails.detailedName,
+      coords: [placeDetails.location.lat, placeDetails.location.lng],
+    }
+  );
+};
+
 export const clearUsers = async () => {
   const keep = [
     "ppyang2002@gmail.com",
