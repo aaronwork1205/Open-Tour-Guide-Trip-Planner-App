@@ -8,6 +8,7 @@ import Invite from "../screens/InviteScreen";
 import CollaboratorDetail from "../screens/CollaboratorDetailScreen";
 import TripsScreen from "../screens/TripsScreen";
 import { useState } from "react";
+import AddTripScreen from "../screens/AddTripScreen";
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ export const TripsStack = () => {
       <Stack.Screen name="Event" component={EventDetailScreen} />
       <Stack.Screen name="Invite" component={Invite} />
       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />
+      <Stack.Screen name="AddTrip" component={AddTripScreen} />
     </Stack.Navigator>
   );
 };

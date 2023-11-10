@@ -11,9 +11,11 @@ import { getEvents } from "./firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./firebase/firebase";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 export default function App() {
   const [signedIn, setSignedIn] = useState(false);
+  const [register, setRegister] = useState(false);
 
   onAuthStateChanged(FIREBASE_AUTH, (user) => {
     if (user) {
@@ -29,8 +31,10 @@ export default function App() {
       <MyDrawer />
       <StatusBar style="light" />
     </NavigationContainer>
+  ) : register ? (
+    <RegisterScreen />
   ) : (
-    <LoginScreen />
+    <LoginScreen setRegister={setRegister} />
   );
 }
 
