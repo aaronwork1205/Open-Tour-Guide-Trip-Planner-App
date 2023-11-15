@@ -52,6 +52,8 @@ Follow these steps to install the Open Tour Guide App:
    ```
 5. You can now access the app on your local machine by either scanning the QR code generated in Command Line/Terminal window or pressing i to open up an iOS simulator(with XCode installed).
 
+The AI assistant is hosted on a local/remote server. Details about this feature are [here](https://localai.io/basics/build/).
+
 ## Usage <a name="usage"></a>
 Here's how you can use the Open Tour Guide App:
 
