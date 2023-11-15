@@ -64,16 +64,7 @@ const AssistantScreen = ({ navigation, route }) => {
                     </Text>
                 ))}
             </ScrollView>
-            {/*<FlatList*/}
-            {/*    data={conversation}*/}
-            {/*    keyExtractor={(item, index) => index.toString()}*/}
-            {/*    renderItem={({ item }) => (*/}
-            {/*        <Text style={item.sender === 'user' ? styles.userMessage : styles.assistantMessage}>*/}
-            {/*            {item.text}*/}
-            {/*        </Text>*/}
-            {/*    )}*/}
-            {/*    // inverted // Inverts the display order for a chat-like experience*/}
-            {/*/>*/}
+
 
 
             {/* Input Bar */}
@@ -99,31 +90,39 @@ const AssistantScreen = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
     container: {
+        flex:0,
         position: 'absolute',
         bottom: 0,
+        left:0,
+        right:0,
+        justifyContent: 'flex-end',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '100%',
+        // width: '100%',
         paddingHorizontal: 10,
     },
     conversationContainer: {
-        flex: 1,
-        marginTop: 10, // Add margin at the top
+        flex: 0,
+        marginTop: 0,
+        marginRight:0,
     },
     conversationContent: {
-        justifyContent: 'flex-end', // Align messages to the bottom
+        justifyContent: 'flex-end',
+
     },
     userMessage: {
         backgroundColor: '#d3d3d3',
         padding: 10,
         borderRadius: 8,
         marginBottom: 5,
+        // justifyContent:'flex-right',
         // width:'100%',
         // borderBottomEndRadius:20,
         alignSelf: 'flex-end',
+
     },
     assistantMessage: {
-        backgroundColor: '#87CEEB', // Light blue for assistant messages
+        backgroundColor: '#87CEEB',
         padding: 10,
         borderRadius: 8,
         marginBottom: 5,
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         paddingHorizontal: 10,
         borderRadius: 15,
-        backgroundColor: 'white', // Optional: Set background color to distinguish from the rest of the screen
+        backgroundColor: 'white',
     },
     sendButton: {
         backgroundColor: 'black',
