@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2f743ddc-4287-47dc-bdfc-4566f024f807" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data/MapData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/events/EventList.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/events/EventList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/dummy.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/dummy.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/screens/AssistantScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/firebase/authentication.js" beforeDir="false" afterPath="$PROJECT_DIR$/firebase/authentication.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/firebase/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/firebase/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/navigation/TabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/TabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/navigation/StackNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/navigation/StackNavigator.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/screens/MapViewScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/MapViewScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/screens/TripsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/screens/TripsScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +60,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/firebase" />
     </key>
   </component>
@@ -76,10 +77,23 @@
       <workItem from="1697595647081" duration="2468000" />
       <workItem from="1697677305698" duration="35134000" />
       <workItem from="1697783327870" duration="84000" />
+      <workItem from="1699994900969" duration="12597000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/screens/MapViewScreen.js</url>
+          <line>28</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
