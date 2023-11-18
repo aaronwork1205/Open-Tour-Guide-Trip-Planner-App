@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation, route }) => {
     <View styles={styles.screen}>
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("AddTrip", { tripId: route.params.tripId })
+          navigation.navigate("AddPlace", { tripId: route.params.tripId })
         }
         style={styles.addButton}
       >
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     zIndex: 100,
     position: "absolute",
     right: 30,
-    top: 650,
+    top: 600,
     backgroundColor: "black",
     width: 56,
     height: 56,

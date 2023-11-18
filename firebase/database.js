@@ -105,6 +105,37 @@ export const getEvents = async () => {
   }
 };
 
+export const addTrip = async (destination, startDate, endDate) => {
+  const email = FIREBASE_AUTH.currentUser.email;
+  userInfo = await getUserInfo(email);
+  console.log(email);
+
+  // add new trip collection.
+  await setDoc(doc(FIRESTORE_DB, "trips", destination), {
+    destination: destination,
+    startDate: startDate,
+    endDate: endDate,
+  });
+
+  // add current user to collaborators collection. This user will be the admin
+  await setDoc(
+    doc(FIRESTORE_DB, "trips", destination, "collaborators", email),
+    {
+      name: userInfo.name,
+      access: "Admin",
+      image: userInfo.image,
+    }
+  );
+
+  // add trip to user > trips collection
+  await setDoc(doc(FIRESTORE_DB, "users", email, "trips", destination), {
+    destination: destination,
+    startDate: startDate,
+    endDate: endDate,
+    access: "Admin",
+  });
+};
+
 export const addPlace = async (placeDetails, tripId) => {
   await setDoc(
     doc(FIRESTORE_DB, "trips", tripId, "events", placeDetails.name),

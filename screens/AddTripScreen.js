@@ -1,64 +1,96 @@
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { PLACES_API_KEY } from "../config";
-import { StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { addPlace } from "../firebase/database";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import AppButton from "../components/AppButton";
+import AppTextInput from "../components/AppTextInput";
+import Screen from "../components/Screen";
+import { addTrip } from "../firebase/database";
 
-const AddTripScreen = ({ navigation, route }) => {
+const AddTripScreen = ({ navigation }) => {
+  const [destination, setDestination] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const onStartDateConfirm = (event, selectedDate) => {
+    const currentDate = selectedDate || startDate;
+    setStartDate(currentDate);
+  };
+
+  const onEndDateConfirm = (event, selectedDate) => {
+    const currentDate = selectedDate || endDate;
+    setEndDate(currentDate);
+  };
+
   return (
-    <>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate("Home", { tripId: route.params.tripId })
+    <Screen style={styles.container}>
+      <AppTextInput
+        icon={"city-variant-outline"}
+        alignSelf="center"
+        style={styles.input}
+        placeholder="Enter destination"
+        value={destination}
+        onChangeText={setDestination}
+      />
+
+      <View style={styles.datePickerRow}>
+        <Text style={styles.datePickerLabel}>Start Date:</Text>
+        {
+          <DateTimePicker
+            testID="startDateTimePicker"
+            value={startDate}
+            mode="date"
+            display="default"
+            onChange={onStartDateConfirm}
+          />
         }
-        style={styles.button}
-      >
-        <Text style={styles.btnText}>Next</Text>
-      </TouchableOpacity>
-      <GooglePlacesAutocomplete
-        placeholder="Type a place"
-        onPress={async (data, details = null) => {
-          const name = data.structured_formatting.main_text;
-          const detailedName = data.description;
-          const location = details.geometry.location;
-          await addPlace({ name, detailedName, location }, route.params.tripId);
-          navigation.navigate("Home", { tripId: route.params.tripId });
-        }}
-        query={{ key: PLACES_API_KEY }}
-        fetchDetails={true}
-        onFail={(error) => console.log(error)}
-        onNotFound={() => console.log("no results")}
-        listEmptyComponent={() => {
-          return (
-            <View style={{ flex: 1 }}>
-              <Text>No results were found</Text>
-            </View>
-          );
+      </View>
+
+      <View style={styles.datePickerRow}>
+        <Text style={styles.datePickerLabel}>End Date:</Text>
+        {
+          <DateTimePicker
+            testID="endDateTimePicker"
+            value={endDate}
+            mode="date"
+            display="default"
+            onChange={onEndDateConfirm}
+          />
+        }
+      </View>
+
+      <AppButton
+        title="ADD"
+        onPress={() => {
+          // Implement the code to add the trip here.
+          const formattedStartDate = startDate.toISOString().split("T")[0];
+          const formattedEndDate = endDate.toISOString().split("T")[0];
+          console.log(formattedStartDate);
+          console.log(formattedEndDate);
+          addTrip(destination, formattedStartDate, formattedEndDate);
+          alert("Trip Added!"); // Placeholder alert
+          navigation.goBack(); // Navigate back to the previous screen
         }}
       />
-    </>
+    </Screen>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    zIndex: 100,
-    position: "absolute",
-    right: 160,
-    top: 650,
-    backgroundColor: "black",
-    width: 100,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 8,
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    shadowOffset: { height: 2, width: 0 },
+  container: {
+    flex: 1,
+    padding: 15,
   },
-  btnText: {
-    color: "white",
+  datePickerRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 15,
+  },
+  datePickerLabel: {
+    flex: 1,
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 10,
   },
 });
 
