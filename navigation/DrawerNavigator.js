@@ -15,7 +15,7 @@ export const MyDrawer = () => {
       drawerContent={(props) => {
         return (
           <SafeAreaView
-            style={{ flex: 1, paddingTop: 20, backgroundColor: "#99f6e4" }}
+            style={{ flex: 1, paddingTop: 20, backgroundColor: "#fbc900" }}
           >
             <View
               style={{
@@ -26,14 +26,14 @@ export const MyDrawer = () => {
             >
               <Image
                 style={{ width: 100, resizeMode: "contain" }}
-                source={require("../assets/logos/logo.png")}
+                source={require("../assets/logos/logo.jpg")}
               />
             </View>
             <DrawerItemList {...props} />
             <DrawerItem
               label="More info"
               onPress={() => {
-                Linking.openURL("http://google.com");
+                Linking.openURL("https://github.com/aaronwork1205/CS8803_trip_guide");
               }}
               icon={() => <Ionicons name="information" size={22} />}
             />

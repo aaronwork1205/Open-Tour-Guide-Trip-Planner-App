@@ -5,6 +5,7 @@ import {
 import { FIREBASE_AUTH } from "./firebase";
 import { addUser } from "./database";
 
+
 export const signUp = (email, password) => {
   createUserWithEmailAndPassword(FIREBASE_AUTH, email, password)
     .then((userCredential) => {
