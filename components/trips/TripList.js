@@ -11,11 +11,20 @@ const TripList = ({ setTripId }) => {
   const [trips, setTrips] = useState([{}]);
 
   useEffect(() => {
-    const fetchTrips = async () => {
-      const newTrips = await getTrips();
-      setTrips(newTrips);
-    };
-    fetchTrips();
+    const email = FIREBASE_AUTH.currentUser.email;
+    const tripsRef = collection(FIRESTORE_DB, "users", email, "trips");
+
+    const subscriber = onSnapshot(tripsRef, {
+      next: (snapshot) => {
+        const trips = [];
+        snapshot.docs.forEach((doc) => {
+          trips.push({ ...doc.data(), tripId: doc.id });
+        });
+        setTrips(trips);
+      },
+    });
+
+    return () => subscriber();
   }, []);
 
   const renderItem = ({ item }) => {

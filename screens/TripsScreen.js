@@ -1,33 +1,44 @@
-import {View, Text, StyleSheet, Button, TouchableOpacity} from "react-native";
-import EventList from "../components/events/EventList";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import TripList from "../components/trips/TripList";
-import { useNavigation } from '@react-navigation/native';
-import React from "react";
-import AssistantScreen from './AssistantScreen';
-
-
-
+import AppButton from "../components/AppButton";
 
 const TripsScreen = ({ route, navigation }) => {
   return (
-    <View styles={styles.screen}>
-      <TripList setTripId={route.params.setTrip} />
+    <View style={{ flex: 1 }}>
+      <View styles={styles.screen}>
+        <TripList setTripId={route.params.setTrip} />
+      </View>
 
+      <View style={styles.addButtonContainer}>
+        <AppButton
+          title="+ Add Trip"
+          color="secondary"
+          width="50%"
+          alignSelf="center"
+          onPress={() => navigation.navigate("AddTrip")}
+        />
+      </View>
 
-      <TouchableOpacity onPress={() =>
-          navigation.navigate("AssistantScreen")} style={styles.button}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("AssistantScreen")}
+        style={styles.button}
+      >
         <Text style={styles.btnText}>Ask me!</Text>
       </TouchableOpacity>
-
-
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
     padding: 20,
+  },
+  addButtonContainer: {
+    position: "absolute", // Position the button absolutely
+    bottom: 50, // At the bottom of the parent View
+    left: 0,
+    right: 0,
+    backgroundColor: "transparent", // Or any other background color
   },
   button: {
     zIndex: 100,
