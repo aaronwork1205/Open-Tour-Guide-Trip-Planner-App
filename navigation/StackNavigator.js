@@ -38,7 +38,11 @@ export const TripsStack = () => {
         component={AddTripScreen}
         options={{ title: "", ...TransitionPresets.ModalSlideFromBottomIOS }}
       />
-      <Stack.Screen name="Home" component={HomeTabs} options={{ title: "" }} />
+      <Stack.Screen
+        name="Home"
+        component={HomeTabs}
+        options={{ title: tripId }}
+      />
       <Stack.Screen name="Event" component={EventDetailScreen} />
       <Stack.Screen name="Invite" component={Invite} />
       <Stack.Screen name="CollaboratorDetail" component={CollaboratorDetail} />

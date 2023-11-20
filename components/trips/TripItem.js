@@ -12,7 +12,7 @@ const TripItem = ({ tripId, title, startDate, endDate, setTripId }) => {
       onPress={() => {
         setTripId(tripId);
         navigation.navigate("Home", {
-          tripId,
+          tripId: tripId,
         });
       }}
     >

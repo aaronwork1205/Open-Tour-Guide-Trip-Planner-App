@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, Button } from "react-native";
 import EventList from "../components/events/EventList";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
 
 const HomeScreen = ({ navigation, route }) => {
   return (
     <View styles={styles.screen}>
       <EventList tripId={route.params.tripId} />
-
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("AddPlace", { tripId: route.params.tripId })
@@ -17,7 +17,6 @@ const HomeScreen = ({ navigation, route }) => {
       >
         <AntDesign name="plus" size={24} color="white" />
       </TouchableOpacity>
-
       <TouchableOpacity
         onPress={() => navigation.navigate("AssistantScreen")}
         style={styles.AIbutton}

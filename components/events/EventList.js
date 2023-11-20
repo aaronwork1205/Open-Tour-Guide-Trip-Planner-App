@@ -51,6 +51,7 @@ const EventList = ({ tripId }) => {
       </View>
     );
   };
+
   return (
     <View
       style={{
