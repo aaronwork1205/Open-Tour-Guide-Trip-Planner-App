@@ -18,13 +18,6 @@ const TripsScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate("AddTrip")}
         />
       </View>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("AssistantScreen")}
-        style={styles.button}
-      >
-        <Text style={styles.btnText}>Ask me!</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -39,25 +32,6 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: "transparent", // Or any other background color
-  },
-  button: {
-    zIndex: 100,
-    position: "absolute",
-    right: 20,
-    top: 700,
-    backgroundColor: "black",
-    width: 100,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 8,
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    shadowOffset: { height: 2, width: 0 },
-  },
-  btnText: {
-    color: "white",
   },
 });
 
