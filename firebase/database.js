@@ -9,7 +9,6 @@ import {
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "./firebase";
 
-
 export const addUser = async (email) => {
   await setDoc(doc(FIRESTORE_DB, "users", email), {
     name: "Placeholder Name",
