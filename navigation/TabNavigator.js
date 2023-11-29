@@ -46,7 +46,11 @@ export const HomeTabs = ({ navigation, route }) => {
         component={MapScreen}
         initialParams={{ tripId: route.params.tripId }}
       />
-      <Tab.Screen name="CalendarView" component={CalendarView} />
+      <Tab.Screen
+        name="CalendarView"
+        component={CalendarView}
+        initialParams={{ tripId: route.params.tripId }}
+      />
     </Tab.Navigator>
   );
 };
