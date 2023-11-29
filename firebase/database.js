@@ -142,6 +142,7 @@ export const addPlace = async (placeDetails, tripId) => {
     {
       detailedName: placeDetails.detailedName,
       coords: [placeDetails.location.lat, placeDetails.location.lng],
+      date: placeDetails.date.toISOString().split("T")[0],
     }
   );
 };
