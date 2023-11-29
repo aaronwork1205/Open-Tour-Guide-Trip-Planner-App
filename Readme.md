@@ -16,19 +16,12 @@ Welcome to the Open Tour Guide (Trip Planner) App! This is the front-end part of
 ## Features <a name="features"></a>
 
 - **Create and Edit Trips**: You can easily create new trips and edit existing ones, adding destinations, activities, and more.
-
 - **Interactive Map**: View and customize your trip on an interactive map, allowing you to see your destinations and plan your routes.
-
+- **Calendar View**: Check all your events on the calendar
 - **Share with Friends**: Collaborate with friends and family by sharing your trip plans and itineraries.
-
 - **Travel Recommendations**: Get personalized travel recommendations for attractions, restaurants, and accommodations.
-
-- **Weather Information**: Stay updated with real-time weather information for your trip destinations.
-
 - **Offline Access**: Access your trip plans and information even when you're offline.
-
 - **Customizable Itineraries**: Tailor your trip itinerary to your preferences, ensuring you make the most of your travel.
-
 - **Multi-Platform Compatibility**: The app works on both iOS and Android devices, ensuring a wide user base.
 
 ## Installation <a name="installation"></a>
