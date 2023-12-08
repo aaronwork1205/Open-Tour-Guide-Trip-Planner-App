@@ -8,6 +8,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "./firebase";
+import { format, utcToZonedTime } from "date-fns-tz";
 
 export const addUser = async (email) => {
   await setDoc(doc(FIRESTORE_DB, "users", email), {
@@ -137,12 +138,21 @@ export const addTrip = async (destination, startDate, endDate) => {
 };
 
 export const addPlace = async (placeDetails, tripId) => {
+  console.log(placeDetails.dateTime);
+  const timeZone = "America/New_York";
+  console.log(timeZone);
+  const dateEastern = utcToZonedTime(placeDetails.dateTime, timeZone);
+  const formattedDate = format(new Date(dateEastern), "yyyy-MM-dd hh:mm aa");
+  console.log(placeDetails.dateTime);
+  console.log(dateEastern);
+  console.log("formatted date:");
+  console.log(formattedDate);
   await setDoc(
     doc(FIRESTORE_DB, "trips", tripId, "events", placeDetails.name),
     {
       detailedName: placeDetails.detailedName,
       coords: [placeDetails.location.lat, placeDetails.location.lng],
-      date: placeDetails.date.toISOString().split("T")[0],
+      dateTime: formattedDate,
     }
   );
 };
