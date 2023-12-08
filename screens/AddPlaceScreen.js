@@ -6,11 +6,11 @@ import { addPlace } from "../firebase/database";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddPlaceScreen = ({ navigation, route }) => {
-  const [placeDate, setPlaceDate] = useState(new Date());
+  const [placeDateTime, setPlaceDate] = useState(new Date());
   const [selectedPlace, setSelectedPlace] = useState(null); // New state for selected place
 
-  const onPlaceDateConfirm = (event, selectedDate) => {
-    const currentDate = selectedDate || placeDate;
+  const onPlaceDateTimeConfirm = (event, selectedDate) => {
+    const currentDate = selectedDate || placeDateTime;
     setPlaceDate(currentDate);
   };
 
@@ -19,8 +19,9 @@ const AddPlaceScreen = ({ navigation, route }) => {
     const name = data.structured_formatting.main_text;
     const detailedName = data.description;
     const location = details.geometry.location;
-    const date = placeDate;
-    setSelectedPlace({ name, detailedName, location, date });
+    const dateTime = placeDateTime;
+    setSelectedPlace({ name, detailedName, location, dateTime });
+    console.log(placeDateTime);
   };
 
   const handleDonePress = async () => {
@@ -36,10 +37,10 @@ const AddPlaceScreen = ({ navigation, route }) => {
         <Text style={styles.datePickerLabel}>When to visit: </Text>
         <DateTimePicker
           testID="PlaceDateTimePicker"
-          value={placeDate}
-          mode="date"
+          value={placeDateTime}
+          mode="datetime"
           display="default"
-          onChange={onPlaceDateConfirm}
+          onChange={onPlaceDateTimeConfirm}
         />
       </View>
 

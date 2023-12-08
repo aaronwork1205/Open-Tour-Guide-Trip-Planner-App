@@ -29,10 +29,11 @@ export default function CalendarView({ route, navigation }) {
         setEndDate(eDate);
         console.log(startDate);
         console.log(endDate);
+
         // Collecting all dates from the snapshot
         snapshot.forEach((doc) => {
           const event = { eventID: doc.detailedName, ...doc.data() };
-          dates.push(new Date(event.date));
+          dates.push(new Date(event.dateTime.split(" ")[0]));
         });
 
         if (dates.length > 0) {
@@ -51,11 +52,11 @@ export default function CalendarView({ route, navigation }) {
           // Adding events to their respective dates
           snapshot.forEach((doc) => {
             const event = { eventID: doc.detailedName, ...doc.data() };
-            const dateKey = event.date;
+            const dateKey = event.dateTime.split(" ")[0];
 
             newItems[dateKey].push({
               detailedName: event.detailedName,
-              date: event.date,
+              date: event.dateTime.split(" ")[0],
             });
           });
         }
@@ -93,6 +94,7 @@ export default function CalendarView({ route, navigation }) {
         selected={startDate}
         renderItem={renderItem}
         renderEmptyDate={renderEmptyDate}
+        startDate={startDate}
       />
     </View>
   );
