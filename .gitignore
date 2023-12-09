@@ -4,3 +4,4 @@ node_modules
 firebase/firebase.js
 config.js
 test.js
+ios/

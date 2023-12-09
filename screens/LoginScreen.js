@@ -3,7 +3,7 @@ import { TextInput } from "react-native";
 import { signIn, signUp } from "../firebase/authentication";
 import { useState } from "react";
 
-const LoginScreen = ({ setRegister }) => {
+const LoginScreen = ({ setRegister, setChosenEmail }) => {
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
 
@@ -12,6 +12,7 @@ const LoginScreen = ({ setRegister }) => {
   };
 
   const onPressSignUp = () => {
+    setChosenEmail(email);
     setRegister(true);
     // signUp(email, pass);
   };

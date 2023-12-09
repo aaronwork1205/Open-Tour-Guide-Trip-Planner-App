@@ -10,9 +10,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { uploadImage } from "../firebase/storage";
+import { uploadImage, getDownloadURL } from "../firebase/storage";
+import { addUser } from "../firebase/database";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ email, setRegister }) => {
   const [name, setName] = useState("");
   const [imageUri, setImageUri] = useState(null);
 
@@ -35,9 +36,16 @@ const RegisterScreen = () => {
 
   const handleRegistration = () => {
     // Handle the registration logic (e.g., validation, API call, etc.)
-    uploadImage(imageUri, name).then(() => {
-      console.log("done");
-    });
+    uploadImage(email, imageUri)
+      .then((downloadURL) => {
+        addUser(email, name, downloadURL).then(() => {
+          console.log("Added user to database");
+          setRegister(false);
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log("Name:", name);
     console.log("Image URI:", imageUri);
     // Note: Implement the registration logic here.

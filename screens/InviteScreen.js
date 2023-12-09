@@ -59,7 +59,7 @@ function Invite({ navigation, route }) {
             <ListItem
               title={item.name}
               subTitle={item.email}
-              image={{ uri: item.image }}
+              image={item.image}
               onPress={() => {
                 console.log("Message selected", item);
                 navigation.navigate("CollaboratorDetail", {

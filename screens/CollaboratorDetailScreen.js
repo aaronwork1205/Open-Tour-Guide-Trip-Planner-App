@@ -17,14 +17,12 @@ function CollaboratorDetail({ route }) {
 
   return (
     <View style={styles.container}>
-      <Image source={{ url: collaborator.image }} style={styles.image} />
+      <Image source={{ uri: collaborator.image }} style={styles.image} />
       <AppText style={styles.name}>{collaborator.name}</AppText>
-
       <View style={styles.section}>
         <Text style={styles.label}>Email:</Text>
         <Text style={styles.content}>{collaborator.email}</Text>
       </View>
-
       <View style={styles.section}>
         <TouchableOpacity
           onPress={() => setIsModalVisible(true)}
@@ -34,7 +32,6 @@ function CollaboratorDetail({ route }) {
           <Text style={[styles.content, styles.accessContent]}>{access}</Text>
         </TouchableOpacity>
       </View>
-
       <Modal visible={isModalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalContainer}>
           <Picker

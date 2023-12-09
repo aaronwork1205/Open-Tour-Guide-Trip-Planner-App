@@ -10,10 +10,11 @@ import {
 import { FIRESTORE_DB } from "./firebase";
 import { format, utcToZonedTime } from "date-fns-tz";
 
-export const addUser = async (email) => {
+export const addUser = async (email, name, imageUrl) => {
   await setDoc(doc(FIRESTORE_DB, "users", email), {
-    name: "Placeholder Name",
+    name: name,
     trips: [],
+    image: imageUrl,
   });
 };
 

@@ -13,12 +13,10 @@ import { FIREBASE_AUTH } from "./firebase/firebase";
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 
-
-
-
 export default function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [register, setRegister] = useState(false);
+  const [email, setChosenEmail] = useState("");
 
   onAuthStateChanged(FIREBASE_AUTH, (user) => {
     if (user) {
@@ -35,9 +33,9 @@ export default function App() {
       <StatusBar style="light" />
     </NavigationContainer>
   ) : register ? (
-    <RegisterScreen />
+    <RegisterScreen email={email} setRegister={setRegister} />
   ) : (
-    <LoginScreen setRegister={setRegister} />
+    <LoginScreen setRegister={setRegister} setChosenEmail={setChosenEmail} />
   );
 }
 
