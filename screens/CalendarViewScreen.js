@@ -22,7 +22,9 @@ export default function CalendarView({ route, navigation }) {
         let dates = [];
 
         // get dates:
-        const DateRef = await getDoc(doc(FIRESTORE_DB, "trips", "Berlin"));
+        const DateRef = await getDoc(
+          doc(FIRESTORE_DB, "trips", route.params.tripId)
+        );
         sDate = DateRef.data().startDate;
         setStartDate(sDate);
         eDate = DateRef.data().endDate;
