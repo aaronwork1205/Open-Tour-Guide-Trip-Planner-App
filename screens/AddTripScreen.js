@@ -62,11 +62,11 @@ const AddTripScreen = ({ navigation }) => {
         title="ADD"
         onPress={() => {
           // Implement the code to add the trip here.
-          const formattedStartDate = startDate.toISOString().split("T")[0];
-          const formattedEndDate = endDate.toISOString().split("T")[0];
-          console.log(formattedStartDate);
-          console.log(formattedEndDate);
-          addTrip(destination, formattedStartDate, formattedEndDate);
+          // const formattedStartDate = startDate.toISOString().split("T")[0];
+          // const formattedEndDate = endDate.toISOString().split("T")[0];
+          // console.log(formattedStartDate);
+          // console.log(formattedEndDate);
+          addTrip(destination, startDate, endDate);
           alert("Trip Added!"); // Placeholder alert
           navigation.goBack(); // Navigate back to the previous screen
         }}

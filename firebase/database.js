@@ -110,13 +110,22 @@ export const getEvents = async () => {
 export const addTrip = async (destination, startDate, endDate) => {
   const email = FIREBASE_AUTH.currentUser.email;
   userInfo = await getUserInfo(email);
-  console.log(email);
+  const timeZone = "America/New_York";
+  console.log(startDate);
+  const startDateEastern = utcToZonedTime(startDate, timeZone);
+  console.log("startdate eastern:");
+  console.log(startDateEastern);
+  const endDateEastern = utcToZonedTime(endDate, timeZone);
+  const formattedStartDate = format(new Date(startDateEastern), "yyyy-MM-dd");
+  console.log(formattedStartDate);
+  console.log(typeof formattedStartDate);
+  const formattedEndDate = format(new Date(endDateEastern), "yyyy-MM-dd");
 
   // add new trip collection.
   await setDoc(doc(FIRESTORE_DB, "trips", destination), {
     destination: destination,
-    startDate: startDate,
-    endDate: endDate,
+    startDate: formattedStartDate,
+    endDate: formattedEndDate,
   });
 
   // add current user to collaborators collection. This user will be the admin
@@ -132,8 +141,8 @@ export const addTrip = async (destination, startDate, endDate) => {
   // add trip to user > trips collection
   await setDoc(doc(FIRESTORE_DB, "users", email, "trips", destination), {
     destination: destination,
-    startDate: startDate,
-    endDate: endDate,
+    startDate: formattedStartDate,
+    endDate: formattedEndDate,
     access: "Admin",
   });
 };
